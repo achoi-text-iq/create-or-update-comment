@@ -617,7 +617,6 @@ async function run() {
         }
 
         commentBody = commentBody + inputs.body;
-        commentBody = commentBody.replace("..", "  ");
         core.debug(`Comment body: ${commentBody}`);
         await octokit.issues.updateComment({
           owner: repo[0],
@@ -639,11 +638,12 @@ async function run() {
         core.setFailed("Missing comment 'body'.");
         return;
       }
+      commentBody = inputs.body.replace("..", "  ");
       const { data: comment } = await octokit.issues.createComment({
         owner: repo[0],
         repo: repo[1],
         issue_number: inputs.issueNumber,
-        body: inputs.body,
+        body: commentBody,
       });
       core.info(
         `Created comment id '${comment.id}' on issue '${inputs.issueNumber}'.`
