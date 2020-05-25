@@ -617,7 +617,7 @@ async function run() {
         }
 
         commentBody = commentBody + inputs.body;
-        commentBody.replace("..", "  ");
+        commentBody = commentBody.replace("..", "  ");
         core.debug(`Comment body: ${commentBody}`);
         await octokit.issues.updateComment({
           owner: repo[0],
